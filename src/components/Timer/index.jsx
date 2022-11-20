@@ -14,7 +14,7 @@ import {
 import Settings from '../Settings';
 
 function Timer() {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
     <Container>
@@ -25,7 +25,7 @@ function Timer() {
       <Time>25</Time>
       <Time>00</Time>
       <WrapperButtons>
-        <SecondaryButton onPress={() => setModalVisible(true)}>
+        <SecondaryButton onPress={() => setIsModalVisible(true)}>
           <MaterialCommunityIcons
             name="dots-horizontal"
             color={'#471515'}
@@ -43,7 +43,10 @@ function Timer() {
           />
         </SecondaryButton>
       </WrapperButtons>
-      <Settings />
+      <Settings
+        setIsModalVisible={setIsModalVisible}
+        isModalVisible={isModalVisible}
+      />
     </Container>
   );
 }

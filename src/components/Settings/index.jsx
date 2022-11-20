@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
-import {Alert, Modal, Switch} from 'react-native';
+import {Alert, Modal, Switch, TouchableOpacity} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   SettingsModal,
+  TitleField,
   TitleText,
   FormField,
   LabelText,
   NumberInput,
 } from './styles';
 
-function Settings() {
+function Settings({isModalVisible, setIsModalVisible}) {
   const [darkMode, setDarkMode] = useState(false);
   const [resumeTimer, setResumeTimer] = useState(false);
   const [sound, setSound] = useState(false);
@@ -18,21 +20,16 @@ function Settings() {
   const [shortBreak, setShortBreak] = useState(5);
   const [longBreak, setLongBreak] = useState(10);
 
-  //   onChanged (text) {
-  //     this.setState({
-  //         mobile: text.replace(/[^0-9]/g, ''),
-  //     });
-  // }
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-        setModalVisible(!modalVisible);
-      }}>
+    <Modal animationType="slide" transparent={true} visible={isModalVisible}>
       <SettingsModal>
-        <TitleText>Settings</TitleText>
+        <TitleField>
+          <TitleText>Settings </TitleText>
+          <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+            <MaterialCommunityIcons name="close" color={'#471515'} size={35} />
+          </TouchableOpacity>
+        </TitleField>
+
         <FormField>
           <LabelText>Dark mode</LabelText>
           <Switch

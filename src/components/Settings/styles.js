@@ -7,11 +7,17 @@ export const SettingsModal = styled.View`
   padding: 60px 30px;
 `;
 
+export const TitleField = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex: 2;
+`;
+
 export const TitleText = styled.Text`
   font-size: 32px;
   font-weight: 700;
   color: #471515;
-  flex: 2;
 `;
 
 export const FormField = styled.View`
@@ -34,5 +40,6 @@ export const NumberInput = styled.TextInput`
   height: 28px;
   width: 40px;
   padding: 0 5px;
+  margin-right: 5px;
   text-align: center;
 `;
