@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
@@ -15,6 +15,17 @@ import Settings from '../Settings';
 
 function Timer() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [form, setForm] = useState({
+    darkMode: false,
+    autoResume: false,
+    sound: false,
+
+    focusLength: 25,
+    pomodoros: 3,
+    shortBreak: 5,
+    longBreak: 10,
+  });
 
   return (
     <Container>
@@ -44,6 +55,7 @@ function Timer() {
         </SecondaryButton>
       </WrapperButtons>
       <Settings
+        settingsForm={setForm}
         setIsModalVisible={setIsModalVisible}
         isModalVisible={isModalVisible}
       />
