@@ -1,5 +1,4 @@
-import React from 'react';
-import {Text} from 'react-native';
+import React, {useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
@@ -12,7 +11,11 @@ import {
   SecondaryButton,
 } from './styles';
 
+import Settings from '../Settings';
+
 function Timer() {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <Container>
       <State>
@@ -22,7 +25,7 @@ function Timer() {
       <Time>25</Time>
       <Time>00</Time>
       <WrapperButtons>
-        <SecondaryButton onPress={() => console.log('settings')}>
+        <SecondaryButton onPress={() => setModalVisible(true)}>
           <MaterialCommunityIcons
             name="dots-horizontal"
             color={'#471515'}
@@ -40,6 +43,7 @@ function Timer() {
           />
         </SecondaryButton>
       </WrapperButtons>
+      <Settings />
     </Container>
   );
 }
