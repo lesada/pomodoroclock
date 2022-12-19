@@ -60,10 +60,15 @@ function Timer() {
     setSeconds(prevSec => {
       if (prevSec - 1 < 0) {
         setMinutes(prevMin => {
-          if (prevMin - 1 < 0) return 0;
-          else return prevMin - 1;
+          if (prevMin - 1 < 0) {
+            stopTimer();
+            setSeconds(0);
+            return 0;
+          } else {
+            setSeconds(59);
+            return prevMin - 1;
+          }
         });
-        return 59;
       } else return prevSec - 1;
     });
   };
