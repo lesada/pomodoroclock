@@ -25,6 +25,7 @@ function Settings({settingsForm, isModalVisible, setIsModalVisible}) {
       sound: false,
     },
     onSubmit: val => {
+      setIsModalVisible(false);
       settingsForm(val);
     },
   });
@@ -34,8 +35,7 @@ function Settings({settingsForm, isModalVisible, setIsModalVisible}) {
       <SettingsModal>
         <TitleField>
           <TitleText>Settings </TitleText>
-          <TouchableOpacity
-            onPress={(handleSubmit, () => setIsModalVisible(false))}>
+          <TouchableOpacity onPress={() => handleSubmit()}>
             <MaterialCommunityIcons name="close" color={'#471515'} size={35} />
           </TouchableOpacity>
         </TitleField>

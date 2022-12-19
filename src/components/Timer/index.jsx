@@ -21,11 +21,52 @@ function Timer() {
     autoResume: false,
     sound: false,
 
-    focusLength: 25,
+    focusLength: 1,
     pomodoros: 3,
     shortBreak: 5,
     longBreak: 10,
   });
+
+  const [isPaused, setIsPaused] = useState(true);
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(form.focusLength);
+  const [customInterval, setCustomInterval] = useState();
+
+  useEffect(() => {
+    setMinutes(form.focusLength);
+  }, [form]);
+
+  const startTimer = () => {
+    setIsPaused(false);
+    setCustomInterval(() =>
+      setInterval(() => {
+        changeTimer();
+      }, 100),
+    );
+  };
+
+  const stopTimer = () => {
+    setIsPaused(true);
+    if (customInterval) clearInterval(customInterval);
+  };
+
+  const openModal = () => {
+    stopTimer();
+    setIsModalVisible(true);
+    setSeconds(0);
+  };
+
+  const changeTimer = () => {
+    setSeconds(prevSec => {
+      if (prevSec - 1 < 0) {
+        setMinutes(prevMin => {
+          if (prevMin - 1 < 0) return 0;
+          else return prevMin - 1;
+        });
+        return 59;
+      } else return prevSec - 1;
+    });
+  };
 
   return (
     <Container>
@@ -33,19 +74,25 @@ function Timer() {
         <MaterialCommunityIcons name="brain" color={'#471515'} size={15} />
         <StateText>Focus</StateText>
       </State>
-      <Time>25</Time>
-      <Time>00</Time>
+      <Time>{minutes < 10 ? '0' + minutes : minutes}</Time>
+      <Time>{seconds < 10 ? '0' + seconds : seconds}</Time>
       <WrapperButtons>
-        <SecondaryButton onPress={() => setIsModalVisible(true)}>
+        <SecondaryButton onPress={openModal}>
           <MaterialCommunityIcons
             name="dots-horizontal"
             color={'#471515'}
             size={35}
           />
         </SecondaryButton>
-        <PrimaryButton onPress={() => console.log('play')}>
-          <MaterialCommunityIcons name="play" color={'#471515'} size={35} />
-        </PrimaryButton>
+        {isPaused ? (
+          <PrimaryButton onPress={() => startTimer()}>
+            <MaterialCommunityIcons name="play" color={'#471515'} size={35} />
+          </PrimaryButton>
+        ) : (
+          <PrimaryButton onPress={() => stopTimer()}>
+            <MaterialCommunityIcons name="pause" color={'#471515'} size={35} />
+          </PrimaryButton>
+        )}
         <SecondaryButton onPress={() => console.log('skip')}>
           <MaterialCommunityIcons
             name="skip-next"

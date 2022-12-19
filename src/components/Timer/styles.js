@@ -14,7 +14,7 @@ export const State = styled.View`
   justify-content: center;
   border: 1px solid #471515;
   border-radius: 50px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 `;
 
 export const StateText = styled.Text`
