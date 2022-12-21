@@ -29,27 +29,31 @@ function Timer() {
 
   const [isPaused, setIsPaused] = useState(true);
   const [timeRemaining, setTimeRemaining] = useState(form.focusLength * 60);
-  const [customInterval, setCustomInterval] = useState();
+
+  const interval = React.useRef();
 
   useEffect(() => {
     setTimeRemaining(form.focusLength * 60);
   }, [form]);
 
+  useEffect(() => {
+    if (timeRemaining === 0) stopTimer();
+  }, [timeRemaining]);
+
   const startTimer = () => {
     setIsPaused(false);
-    setCustomInterval(() =>
-      setInterval(() => {
-        setTimeRemaining(prev => {
-          if (prev - 1 > 0) return prev - 1;
-          else return 0;
-        });
-      }, 1000),
-    );
+    interval.current = setInterval(function () {
+      setTimeRemaining(prev => {
+        if (prev - 1 <= 0) {
+          return 0;
+        } else return prev - 1;
+      });
+    }, 100);
   };
 
   const stopTimer = () => {
+    clearInterval(interval.current);
     setIsPaused(true);
-    if (customInterval) clearInterval(customInterval);
   };
 
   const openModal = () => {
