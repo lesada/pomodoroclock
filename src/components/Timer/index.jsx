@@ -28,20 +28,22 @@ function Timer() {
   });
 
   const [isPaused, setIsPaused] = useState(true);
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(form.focusLength);
+  const [timeRemaining, setTimeRemaining] = useState(form.focusLength * 60);
   const [customInterval, setCustomInterval] = useState();
 
   useEffect(() => {
-    setMinutes(form.focusLength);
+    setTimeRemaining(form.focusLength * 60);
   }, [form]);
 
   const startTimer = () => {
     setIsPaused(false);
     setCustomInterval(() =>
       setInterval(() => {
-        changeTimer();
-      }, 100),
+        setTimeRemaining(prev => {
+          if (prev - 1 > 0) return prev - 1;
+          else return 0;
+        });
+      }, 1000),
     );
   };
 
@@ -53,24 +55,7 @@ function Timer() {
   const openModal = () => {
     stopTimer();
     setIsModalVisible(true);
-    setSeconds(0);
-  };
-
-  const changeTimer = () => {
-    setSeconds(prevSec => {
-      if (prevSec - 1 < 0) {
-        setMinutes(prevMin => {
-          if (prevMin - 1 < 0) {
-            stopTimer();
-            setSeconds(0);
-            return 0;
-          } else {
-            setSeconds(59);
-            return prevMin - 1;
-          }
-        });
-      } else return prevSec - 1;
-    });
+    setTimeRemaining(0);
   };
 
   return (
@@ -79,8 +64,16 @@ function Timer() {
         <MaterialCommunityIcons name="brain" color={'#471515'} size={15} />
         <StateText>Focus</StateText>
       </State>
-      <Time>{minutes < 10 ? '0' + minutes : minutes}</Time>
-      <Time>{seconds < 10 ? '0' + seconds : seconds}</Time>
+      <Time>
+        {Math.floor(timeRemaining / 60) > 9
+          ? Math.floor(timeRemaining / 60)
+          : '0' + Math.floor(timeRemaining / 60)}
+      </Time>
+      <Time>
+        {Math.floor(timeRemaining % 60) > 9
+          ? Math.floor(timeRemaining % 60)
+          : '0' + Math.floor(timeRemaining % 60)}
+      </Time>
       <WrapperButtons>
         <SecondaryButton onPress={openModal}>
           <MaterialCommunityIcons
