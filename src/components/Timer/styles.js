@@ -6,7 +6,7 @@ export const Container = styled.View`
 `;
 
 export const State = styled.View`
-  width: 100px;
+  width: 125px;
   height: 35px;
   background-color: rgba(255, 76, 76, 0.15);
   flex-direction: row;

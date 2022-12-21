@@ -28,6 +28,8 @@ function Timer() {
   });
 
   const [isPaused, setIsPaused] = useState(true);
+  const [count, setCount] = useState(0);
+  const [state, setState] = useState('Focus');
   const [timeRemaining, setTimeRemaining] = useState(form.focusLength * 60);
 
   const interval = React.useRef();
@@ -56,17 +58,43 @@ function Timer() {
     setIsPaused(true);
   };
 
+  const skipTimer = () => {
+    if (count < 3) {
+      if (state === 'Focus') {
+        setTimeRemaining(form.shortBreak * 60);
+        setState('Short Break');
+      } else {
+        setTimeRemaining(form.focusLength * 60);
+        setState('Focus');
+        setCount(count + 1);
+      }
+    } else {
+      setTimeRemaining(form.longBreak * 60);
+      setState('Long Break');
+      setCount(0);
+    }
+  };
+
+  const resetTimer = () => {
+    setTimeRemaining(form.focusLength * 60);
+    setState('Focus');
+  };
+
   const openModal = () => {
     stopTimer();
+    resetTimer();
     setIsModalVisible(true);
-    setTimeRemaining(0);
   };
 
   return (
     <Container>
       <State>
-        <MaterialCommunityIcons name="brain" color={'#471515'} size={15} />
-        <StateText>Focus</StateText>
+        <MaterialCommunityIcons
+          name={state == 'Focus' ? 'brain' : 'coffee'}
+          color={'#471515'}
+          size={15}
+        />
+        <StateText>{state}</StateText>
       </State>
       <Time>
         {Math.floor(timeRemaining / 60) > 9
@@ -95,7 +123,7 @@ function Timer() {
             <MaterialCommunityIcons name="pause" color={'#471515'} size={35} />
           </PrimaryButton>
         )}
-        <SecondaryButton onPress={() => console.log('skip')}>
+        <SecondaryButton onPress={() => skipTimer()}>
           <MaterialCommunityIcons
             name="skip-next"
             color={'#471515'}
