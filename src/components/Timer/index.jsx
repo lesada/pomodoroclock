@@ -39,7 +39,10 @@ function Timer() {
   }, [form]);
 
   useEffect(() => {
-    if (timeRemaining === 0) stopTimer();
+    if (timeRemaining === 0) {
+      stopTimer();
+      skipTimer();
+    }
   }, [timeRemaining]);
 
   const startTimer = () => {
@@ -59,7 +62,7 @@ function Timer() {
   };
 
   const skipTimer = () => {
-    if (count < 3) {
+    if (count < form.pomodoros) {
       if (state === 'Focus') {
         setTimeRemaining(form.shortBreak * 60);
         setState('Short Break');
@@ -73,6 +76,8 @@ function Timer() {
       setState('Long Break');
       setCount(0);
     }
+
+    if (form.autoResume) startTimer();
   };
 
   const resetTimer = () => {

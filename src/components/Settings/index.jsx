@@ -21,7 +21,7 @@ function Settings({settingsForm, isModalVisible, setIsModalVisible}) {
       pomodoros: 3,
       shortBreak: 5,
       longBreak: 10,
-      autoResume: true,
+      autoResume: false,
       sound: false,
     },
     onSubmit: val => {
