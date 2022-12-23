@@ -1,24 +1,22 @@
 import React, {useState, useEffect} from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import Sound from 'react-native-sound';
+import Settings from '../Settings';
 import {
   Container,
   State,
+  StateIcon,
   StateText,
   Time,
   WrapperButtons,
+  ButtonIcon,
   PrimaryButton,
   SecondaryButton,
 } from './styles';
 
-import Sound from 'react-native-sound';
+function Timer({setDarkMode}) {
+  Sound.setCategory('Playback', true); // true = mixWithOthers
+  const ding = new Sound('beep.mp3', Sound.MAIN_BUNDLE);
 
-import Settings from '../Settings';
-
-Sound.setCategory('Playback', true); // true = mixWithOthers
-var ding = new Sound('beep.mp3', Sound.MAIN_BUNDLE);
-
-function Timer() {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [form, setForm] = useState({
@@ -41,7 +39,11 @@ function Timer() {
 
   useEffect(() => {
     setTimeRemaining(form.focusLength * 60);
-  }, [form]);
+  }, [form.focusLength]);
+
+  useEffect(() => {
+    setDarkMode(form.darkMode);
+  }, [form.darkMode]);
 
   useEffect(() => {
     if (timeRemaining === 0) {
@@ -64,7 +66,6 @@ function Timer() {
   const stopTimer = () => {
     clearInterval(interval.current);
     setIsPaused(true);
-
     if (form.sound) ding.play();
   };
 
@@ -90,12 +91,13 @@ function Timer() {
   };
 
   const resetTimer = () => {
+    clearInterval(interval.current);
+    setIsPaused(true);
     setTimeRemaining(form.focusLength * 60);
     setState('Focus');
   };
 
   const openModal = () => {
-    stopTimer();
     resetTimer();
     setIsModalVisible(true);
   };
@@ -103,11 +105,7 @@ function Timer() {
   return (
     <Container>
       <State>
-        <MaterialCommunityIcons
-          name={state == 'Focus' ? 'brain' : 'coffee'}
-          color={'#471515'}
-          size={15}
-        />
+        <StateIcon name={state == 'Focus' ? 'brain' : 'coffee'} />
         <StateText>{state}</StateText>
       </State>
       <Time>
@@ -122,27 +120,19 @@ function Timer() {
       </Time>
       <WrapperButtons>
         <SecondaryButton onPress={openModal}>
-          <MaterialCommunityIcons
-            name="dots-horizontal"
-            color={'#471515'}
-            size={35}
-          />
+          <ButtonIcon name="dots-horizontal" color={'#471515'} size={35} />
         </SecondaryButton>
         {isPaused ? (
           <PrimaryButton onPress={() => startTimer()}>
-            <MaterialCommunityIcons name="play" color={'#471515'} size={35} />
+            <ButtonIcon name="play" color={'#471515'} size={35} />
           </PrimaryButton>
         ) : (
           <PrimaryButton onPress={() => stopTimer()}>
-            <MaterialCommunityIcons name="pause" color={'#471515'} size={35} />
+            <ButtonIcon name="pause" color={'#471515'} size={35} />
           </PrimaryButton>
         )}
         <SecondaryButton onPress={() => skipTimer()}>
-          <MaterialCommunityIcons
-            name="skip-next"
-            color={'#471515'}
-            size={35}
-          />
+          <ButtonIcon name="skip-next" color={'#471515'} size={35} />
         </SecondaryButton>
       </WrapperButtons>
       <Settings

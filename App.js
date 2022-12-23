@@ -1,23 +1,25 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import Timer from './src/components/Timer';
+import styled, {ThemeProvider} from 'styled-components/native';
+import {lightTheme, darkTheme} from './styles/themes';
 
 const App = () => {
+  const [darkMode, setDarkMode] = useState(false);
   return (
-    <View style={styles.container}>
-      <Timer />
-    </View>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <PomodoroWrapper>
+        <Timer setDarkMode={setDarkMode} />
+      </PomodoroWrapper>
+    </ThemeProvider>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFF2F2',
-  },
-});
-
 export default App;
+
+const PomodoroWrapper = styled.View`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: ${props => props.theme.background};
+`;
