@@ -69,6 +69,8 @@ function Timer() {
   };
 
   const skipTimer = () => {
+    stopTimer();
+
     if (count < form.pomodoros) {
       if (state === 'Focus') {
         setTimeRemaining(form.shortBreak * 60);
