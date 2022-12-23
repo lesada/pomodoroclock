@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Timer from './src/components/Timer';
 
 const App = () => {
