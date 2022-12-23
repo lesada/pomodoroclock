@@ -24,7 +24,7 @@ function Timer({setDarkMode}) {
     autoResume: false,
     sound: false,
 
-    focusLength: 1,
+    focusLength: 25,
     pomodoros: 3,
     shortBreak: 5,
     longBreak: 10,
@@ -60,7 +60,7 @@ function Timer({setDarkMode}) {
           return 0;
         } else return prev - 1;
       });
-    }, 100);
+    }, 1000);
   };
 
   const stopTimer = () => {
