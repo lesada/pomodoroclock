@@ -10,6 +10,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.pomodoroclock.newarchitecture.MainApplicationReactNativeHost;
+import com.zmxv.RNSound.RNSoundPackage; // <-- New
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSMainModuleName() {
           return "index";
         }
+
       };
 
   private final ReactNativeHost mNewArchitectureNativeHost =

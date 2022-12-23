@@ -11,7 +11,12 @@ import {
   SecondaryButton,
 } from './styles';
 
+import Sound from 'react-native-sound';
+
 import Settings from '../Settings';
+
+Sound.setCategory('Playback', true); // true = mixWithOthers
+var ding = new Sound('beep.mp3', Sound.MAIN_BUNDLE);
 
 function Timer() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -59,6 +64,8 @@ function Timer() {
   const stopTimer = () => {
     clearInterval(interval.current);
     setIsPaused(true);
+
+    if (form.sound) ding.play();
   };
 
   const skipTimer = () => {
