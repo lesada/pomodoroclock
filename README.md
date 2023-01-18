@@ -1,6 +1,9 @@
 # Pomodoro Clock
 
-![image](https://user-images.githubusercontent.com/68572174/195881984-b1d6c1e6-77b0-448b-85de-7bc2ea856472.png)
+![image](https://user-images.githubusercontent.com/68572174/213083109-e33b1a5d-4246-4c18-b24c-f89decea9f0f.png)  &nbsp;&nbsp;  ![image](https://user-images.githubusercontent.com/68572174/213083254-6d667609-ec53-426e-ad4b-a38c8334fff9.png)
+
+
+
 
 ## 🧪 Technologies
 
